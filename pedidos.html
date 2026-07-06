@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Meus pedidos · FitGo</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header" id="topo">
+    <nav class="nav container">
+      <a href="index.html" class="brand" aria-label="FitGo">
+        <svg class="logo-mark" width="38" height="38" viewBox="0 0 48 48" aria-hidden="true">
+          <rect width="48" height="48" rx="12" fill="#16a34a"/>
+          <path d="M15 30c8 0 13-5 18-16-3 12-9 18-18 18z" fill="#fff"/>
+          <circle cx="17" cy="20" r="3" fill="#bbf7d0"/>
+        </svg>
+        <span class="brand-text"><strong>Fit<span>Go</span></strong><small>Comida Fitness</small></span>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html" class="nav-link">Cardápio</a>
+        <span class="user-chip" id="userChip" hidden><span id="userEmail"></span><button id="logoutBtn" title="Sair">⎋</button></span>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow" style="color:#bbf7d0">Sua conta</p>
+        <h1>Meus pedidos</h1>
+      </div>
+    </section>
+    <section class="orders">
+      <div class="container">
+        <div id="ordersList"><div class="state"><div class="spinner"></div>Carregando…</div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span class="muted">© <span id="year"></span> FitGo · Projeto fullstack de demonstração.</span>
+    </div>
+  </footer>
+
+  <script type="module" src="pedidos.js"></script>
+</body>
+</html>

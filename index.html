@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FitGo — delivery de comida fitness. Peça pratos saudáveis, calcule o frete pelo seu endereço e receba em casa." />
+  <title>FitGo · Delivery Fitness</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header" id="topo">
+    <nav class="nav container">
+      <a href="index.html" class="brand" aria-label="FitGo">
+        <svg class="logo-mark" width="38" height="38" viewBox="0 0 48 48" aria-hidden="true">
+          <rect width="48" height="48" rx="12" fill="#16a34a"/>
+          <path d="M15 30c8 0 13-5 18-16-3 12-9 18-18 18z" fill="#fff"/>
+          <circle cx="17" cy="20" r="3" fill="#bbf7d0"/>
+        </svg>
+        <span class="brand-text"><strong>Fit<span>Go</span></strong><small>Comida Fitness</small></span>
+      </a>
+      <div class="nav-actions">
+        <a href="pedidos.html" class="nav-link" id="navPedidos" hidden>Meus pedidos</a>
+        <button class="btn btn-ghost btn-sm" id="authBtn">Entrar</button>
+        <span class="user-chip" id="userChip" hidden><span id="userEmail"></span><button id="logoutBtn" title="Sair">⎋</button></span>
+        <button class="cart-btn" id="cartBtn" aria-label="Abrir carrinho">🛒<span class="cart-count" id="cartCount">0</span></button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="container hero-inner">
+        <p class="eyebrow">Saudável · rápido · gostoso</p>
+        <h1>Comida fitness<br />na sua porta</h1>
+        <p class="lead">Pratos balanceados, feitos na hora. Monte seu pedido, calcule o frete pelo CEP e receba em casa.</p>
+        <a href="#cardapio" class="btn btn-primary">Ver cardápio</a>
+      </div>
+    </section>
+
+    <section id="cardapio" class="menu">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Cardápio</p>
+          <h2>Escolha seus pratos</h2>
+        </div>
+        <div class="cat-tabs" id="catTabs"></div>
+        <div class="menu-grid" id="menuGrid"><div class="state"><div class="spinner"></div>Carregando cardápio…</div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span class="brand">
+        <svg class="logo-mark" width="30" height="30" viewBox="0 0 48 48" aria-hidden="true">
+          <rect width="48" height="48" rx="12" fill="#16a34a"/>
+          <path d="M15 30c8 0 13-5 18-16-3 12-9 18-18 18z" fill="#fff"/>
+          <circle cx="17" cy="20" r="3" fill="#bbf7d0"/>
+        </svg>
+        <span class="brand-text"><strong>Fit<span>Go</span></strong><small>Comida Fitness</small></span>
+      </span>
+      <p>Entregamos em toda a região · Seg a Dom · 11h às 22h</p>
+      <p class="muted">© <span id="year"></span> FitGo · Projeto fullstack de demonstração.</p>
+    </div>
+  </footer>
+
+  <!-- Carrinho (drawer) -->
+  <div class="drawer" id="cartDrawer" hidden>
+    <div class="drawer-backdrop" data-close-cart></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true">
+      <div class="drawer-head">
+        <h2>Seu pedido</h2>
+        <button class="drawer-close" data-close-cart aria-label="Fechar">×</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+
+      <div class="cart-address" id="cartAddress">
+        <h3>Endereço de entrega</h3>
+        <div class="addr-grid">
+          <label class="cep">CEP<input type="text" id="aCep" placeholder="00000-000" inputmode="numeric" maxlength="9" /></label>
+          <label class="num">Número<input type="text" id="aNum" placeholder="123" /></label>
+          <label class="rua">Rua<input type="text" id="aRua" placeholder="Rua / Av." /></label>
+          <label class="bairro">Bairro<input type="text" id="aBairro" placeholder="Bairro" /></label>
+          <label class="cidade">Cidade<input type="text" id="aCidade" placeholder="Cidade" /></label>
+          <label class="uf">UF<input type="text" id="aUf" placeholder="SP" maxlength="2" /></label>
+          <label class="comp">Complemento<input type="text" id="aComp" placeholder="Apto, bloco, referência" /></label>
+        </div>
+        <button class="btn btn-ghost btn-block" id="freteBtn">Calcular frete</button>
+        <p class="frete-msg" id="freteMsg"></p>
+      </div>
+
+      <div class="cart-totals" id="cartTotals"></div>
+      <button class="btn btn-primary btn-block" id="checkoutBtn" disabled>Finalizar pedido</button>
+      <p class="cart-hint" id="cartHint"></p>
+    </aside>
+  </div>
+
+  <!-- Modal de login / cadastro -->
+  <div class="modal" id="authModal" hidden>
+    <div class="modal-backdrop" data-close-auth></div>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close" data-close-auth aria-label="Fechar">×</button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Entrar</button>
+        <button class="auth-tab" data-tab="signup">Criar conta</button>
+      </div>
+      <form id="authForm">
+        <label id="nomeField" hidden>Nome<input type="text" id="auNome" placeholder="Seu nome" /></label>
+        <label>E-mail<input type="email" id="auEmail" required placeholder="voce@email.com" autocomplete="email" /></label>
+        <label>Senha<input type="password" id="auSenha" required placeholder="mínimo 6 caracteres" autocomplete="current-password" /></label>
+        <button type="submit" class="btn btn-primary btn-block" id="authSubmit">Entrar</button>
+        <p class="form-error" id="authError"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de pedido finalizado -->
+  <div class="modal" id="okModal" hidden>
+    <div class="modal-backdrop" data-close-ok></div>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close" data-close-ok aria-label="Fechar">×</button>
+      <div class="ok-head"><span class="ok-ico">✅</span><h2>Pedido registrado!</h2></div>
+      <p class="ok-sub">Confira o resumo — você pode enviar direto pra loja no WhatsApp.</p>
+      <pre class="order-msg" id="orderMsg"></pre>
+      <a class="btn btn-primary btn-block" id="waBtn" target="_blank" rel="noopener">Enviar no WhatsApp</a>
+      <button class="btn btn-ghost btn-block" id="copyBtn">Copiar mensagem</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
