@@ -30,7 +30,13 @@ if (supa) {
   supa.auth.getSession().then(({ data }) => setAuth(data.session));
   supa.auth.onAuthStateChange((_e, s) => setAuth(s));
 }
-el('logoutBtn').addEventListener('click', () => supa.auth.signOut());
+el('logoutBtn').addEventListener('click', async () => {
+  if (!supa) return;
+  try { await supa.auth.signOut(); } catch (_) {}
+  setAuth(null);
+  el('cartDrawer').hidden = true;
+  toast('Você saiu da conta.');
+});
 
 // modal auth
 let authTab = 'login';
