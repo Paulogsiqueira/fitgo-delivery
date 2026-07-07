@@ -61,7 +61,13 @@ el('authForm').addEventListener('submit', async (e) => {
       closeAuth(); toast('Bem-vindo de volta! 👋');
     }
   } catch (err) {
-    el('authError').textContent = err.message === 'Invalid login credentials' ? 'E-mail ou senha inválidos.' : (err.message || 'Erro.');
+    const m = (err.message || '').toLowerCase();
+    let txt = err.message || 'Erro.';
+    if (m.includes('invalid login')) txt = 'E-mail ou senha inválidos.';
+    else if (m.includes('rate limit')) txt = 'Limite de e-mails do Supabase atingido. Desative "Confirm email" no painel (Auth → Providers → Email) e tente com um e-mail novo.';
+    else if (m.includes('already') && m.includes('regist')) txt = 'Esse e-mail já tem conta. Use a aba "Entrar".';
+    else if (m.includes('at least 6') || m.includes('password should')) txt = 'A senha precisa ter no mínimo 6 caracteres.';
+    el('authError').textContent = txt;
   } finally { el('authSubmit').disabled = false; }
 });
 
